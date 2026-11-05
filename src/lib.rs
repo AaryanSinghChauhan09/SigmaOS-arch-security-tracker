@@ -7,14 +7,14 @@ use std::fmt;
 
 /// Errors produced by this component. Fail-fast: errors are returned, not panicked.
 #[derive(Debug, Clone, PartialEq, Eq)]
-pub enum Sigmaos_arch_security_trackerError {
+pub enum ArchSecurityTrackerError {
     /// The requested operation is not valid in the current state.
     InvalidState,
     /// Input failed validation.
     InvalidInput(String),
 }
 
-impl fmt::Display for Sigmaos_arch_security_trackerError {
+impl fmt::Display for ArchSecurityTrackerError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
             Self::InvalidState => write!(f, "invalid state"),
@@ -23,20 +23,20 @@ impl fmt::Display for Sigmaos_arch_security_trackerError {
     }
 }
 
-impl std::error::Error for Sigmaos_arch_security_trackerError {}
+impl std::error::Error for ArchSecurityTrackerError {}
 
 /// Core component type. Holds configuration; performs no I/O by default.
 #[derive(Debug, Clone, Default)]
-pub struct Sigmaos_arch_security_tracker {
+pub struct ArchSecurityTracker {
     name: String,
 }
 
-impl Sigmaos_arch_security_tracker {
+impl ArchSecurityTracker {
     /// Create a new component instance. Fails fast on empty names.
-    pub fn new(name: impl Into<String>) -> Result<Self, Sigmaos_arch_security_trackerError> {
+    pub fn new(name: impl Into<String>) -> Result<Self, ArchSecurityTrackerError> {
         let name = name.into();
         if name.trim().is_empty() {
-            return Err(Sigmaos_arch_security_trackerError::InvalidInput("name must not be empty".into()));
+            return Err(ArchSecurityTrackerError::InvalidInput("name must not be empty".into()));
         }
         Ok(Self { name })
     }
@@ -47,9 +47,9 @@ impl Sigmaos_arch_security_tracker {
     }
 
     /// Perform the component's primary action. Returns a deterministic result.
-    pub fn run(&self) -> Result<String, Sigmaos_arch_security_trackerError> {
+    pub fn run(&self) -> Result<String, ArchSecurityTrackerError> {
         if self.name.is_empty() {
-            return Err(Sigmaos_arch_security_trackerError::InvalidState);
+            return Err(ArchSecurityTrackerError::InvalidState);
         }
         Ok(format!("{}: ok", self.name))
     }
@@ -62,18 +62,18 @@ mod tests {
     #[test]
     fn new_rejects_empty_name() {
         // Arrange / Act / Assert
-        assert!(matches!(Sigmaos_arch_security_tracker::new("  "), Err(Sigmaos_arch_security_trackerError::InvalidInput(_))));
+        assert!(matches!(ArchSecurityTracker::new("  "), Err(ArchSecurityTrackerError::InvalidInput(_))));
     }
 
     #[test]
     fn run_returns_deterministic_result() {
-        let c = Sigmaos_arch_security_tracker::new("test").unwrap();
+        let c = ArchSecurityTracker::new("test").unwrap();
         assert_eq!(c.run().unwrap(), "test: ok");
     }
 
     #[test]
     fn name_is_accessible() {
-        let c = Sigmaos_arch_security_tracker::new("abc").unwrap();
+        let c = ArchSecurityTracker::new("abc").unwrap();
         assert_eq!(c.name(), "abc");
     }
 }
