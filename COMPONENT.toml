@@ -3,7 +3,7 @@ name = "SigmaOS-arch-security-tracker"
 tier = 2
 stability = "scaffold"
 language = "rust"
-description = "arch-security-tracker component"
+description = "SigmaOS arch-security-tracker component (Arch Linux inspired)"
 upstream = []
 
 [contract]
