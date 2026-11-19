@@ -1,8 +1,15 @@
 [package]
-name = "sigmaos-arch-security-tracker"
+name = "SigmaOS-arch-security-tracker"
 version = "0.1.0"
 edition = "2021"
-license = "MIT"
-description = "Security advisory and CVE tracker — SigmaOS component inspired by Arch Linux infrastructure."
+license = "Apache-2.0"
+description = "SigmaOS arch_security_tracker component"
+
+[lib]
+name = "arch_security_tracker"
+path = "src/lib.rs"
 
 [dependencies]
+thiserror = "1"
+
+[dev-dependencies]
